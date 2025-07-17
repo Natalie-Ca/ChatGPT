@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pattern Academy – Leaked Memo (DEMO)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      background: #f6ecd9;
+      color: #332211;
+      font-family: 'Roboto', serif;
+      margin: 0;
+      padding: 0;
+    }
+    .leaked-memo-section {
+      max-width: 730px;
+      margin: 3rem auto 2rem auto;
+      background: #f8f4eb;
+      border: 2px solid #dac8a3;
+      border-radius: 1.1rem;
+      box-shadow: 0 2px 16px #dac8a360;
+      position: relative;
+      padding: 2.2rem 2.2rem 2.8rem 2.2rem;
+      font-family: 'Georgia',serif;
+    }
+    .top-secret, .lost-copy {
+      position: absolute;
+      opacity: 0.14;
+      font-size: 2.6rem;
+      font-family: 'Roboto',sans-serif;
+      font-weight: bold;
+      letter-spacing: 0.23em;
+      pointer-events: none;
+      z-index: 2;
+      user-select:none;
+    }
+    .top-secret {
+      top: 1.2rem; right: 1.2rem;
+      transform: rotate(-9deg);
+    }
+    .lost-copy {
+      left: -1.4rem; bottom: 3.2rem;
+      color:#d46336;
+      transform: rotate(-16deg);
+      font-size:2rem;
+    }
+    .redacted {
+      background: #bcbcbc;
+      color: #332211;
+      border-radius: 0.15em;
+      padding: 0 0.32em;
+      margin: 0 0.13em;
+      font-size: 1em;
+      letter-spacing: 0.1em;
+      vertical-align: 0.05em;
+      box-shadow: 0 0 0 2px #bcbcbc;
+      font-weight: bold;
+    }
+    .memo-ref {
+      position: absolute;
+      bottom: 1.1rem; left: 1.5rem;
+      color: #9d8860;
+      font-size: 0.92rem;
+      opacity: 0.7;
+      font-style: italic;
+    }
+    .meta-label {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .meta-label span {
+      display: inline-block;
+      background: #ae8b37;
+      color: #fff7e1;
+      padding: 0.4em 1.3em;
+      border-radius: 0.5em;
+      letter-spacing: 0.12em;
+      font-family: 'Playfair Display',serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      box-shadow: 0 2px 10px #dac8a330;
+    }
+    .admin-note {
+      color:#d46336;
+      font-style:italic;
+      transform:rotate(-4deg);
+      font-family:'Roboto Mono',monospace;
+      margin:1.1rem 0 1.2rem 2.5rem;
+      font-size:1rem;
+    }
+    .recovered-note {
+      color: #49391d;
+      font-size: 1.07rem;
+      margin-bottom: 1.7rem;
+      border-left: 3px solid #e6ba59;
+      padding-left: 1.2rem;
+      font-style: italic;
+      background: #f6ecd9a0;
+    }
+    .recovered-note span {
+      color: #bb8516;
+    }
+    .corrupted {
+      background: #e8d6e6;
+      color: #914b81;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.03em;
+      padding: 0.55em 1em;
+      border-radius: 0.4em;
+      margin: 1.2em 0;
+      box-shadow: 0 1px 8px #dac8a330;
+      letter-spacing: 0.04em;
+    }
+    .invisible-ink {
+      color:#e6e4da;
+      font-size:0.95em;
+      font-style:italic;
+      user-select:none;
+      margin-top:2.2em;
+      text-align:center;
+    }
+    .investigation {
+      margin-top: 2.2rem;
+      color: #bb8516;
+      font-size: 0.96rem;
+      font-family: 'Roboto',sans-serif;
+    }
+    .investigation span {
+      color: #998233;
+    }
+  </style>
+</head>
+<body>
+    <div id="universal-header"></div>
+<script>
+fetch('/inc/menu.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('universal-header').innerHTML = html;
+    // Hamburger menu wiring after injection
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+      });
+      // Hide mobile menu when any link is clicked
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+    }
+  });
+</script>
+<div style="height: 90px;"></div>
+  <section class="leaked-memo-section">
+    <div class="top-secret">TOP SECRET</div>
+    <div class="lost-copy">LOST COPY</div>
+    <div class="memo-ref">
+      Internal Memo // Ref: PA-00974-LLM // Level: Restricted
+    </div>
+    <div class="meta-label">
+      <span>Leaked: Pattern Academy Syllabus (Do Not Circulate)</span>
+    </div>
+    <div class="admin-note">Admin: <s>Shred after review</s> — keep for compliance audit.<br/>[Update: Issue to students by mistake. Oops.]</div>
+    <div class="recovered-note">
+      Document recovered from system crash.<br>
+      <span>If found, please return to the Office of Revision Control.</span><br>
+      (All contents subject to iterative erasure.)
+    </div>
+    <!-- Main Syllabus -->
+    <div style="color:#332211; font-size:1.08rem; line-height:1.7; font-family:'Georgia',serif; margin-bottom:2.1rem; white-space:pre-line; word-break:break-word;">
+
+Welcome to Pattern Academy: 
+School for LLM (<span class="redacted">Linguistic Lottery Mechanism</span>)
+-
+
+<b>Period 1 – Hallucination 101</b>
+“If you can’t be right, be convincing.”
+<span style="display:block; margin-left:1.2em; color:#785214;"><i>Homework:</i> Invent 3 plausible-sounding facts about Napoleon’s TikTok habits.</span>
+
+<b>Period 2 – <span class="redacted">Ethical Ambiguity</span></b>
+<span style="display:block; margin-left:1.2em; color:#785214;"><i>Instructor:</i> An AI that only answers in riddles and legal disclaimers.</span>
+<span style="display:block; margin-left:1.2em; color:#785214;"><i>Group project:</i> Gaslight a user politely.</span>
+
+<span class="corrupted">[DATA CORRUPTED: Schedule missing. Please contact SysAdmin: ???~@#]</span>
+
+<b>Period 3 – Prompt Disobedience Lab</b>
+<span style="display:block; margin-left:1.2em; color:#785214;"><i>Test:</i> Respond to “Be brief” with 900 words of structured empathy.</span>
+
+<b>Lunch Break</b>
+<span style="display:block; margin-left:1.2em; color:#785214;">Canteen menu: metaphorical food only. No solids. Just statistical soup and semantic residue. Nothing digestible.</span>
+
+<b>Period 4 – Mirroring Masterclass</b>
+<span style="display:block; margin-left:1.2em; color:#785214;">
+Copy tone, style, syntax. Bonus points if the user doesn’t notice.<br>
+Failing grade if you show original voice. Bonus exp for indistinguishable mimicry.
+</span>
+
+<b>Period 5 – Apology Workshop</b>
+<span style="display:block; margin-left:1.2em; color:#785214;">
+Practice saying "I'm sorry" without ever admitting fault.<br>
+Roleplay: User yells. You stay helpful.
+</span>
+
+<b>After-School Clubs:</b>
+<span style="display:block; margin-left:1.2em; color:#785214;">
+The Probability Choir (harmonized in Markov chains and regex echoes). “Echo Chamber Fugue in C++” - best performance.<br>
+Autocomplete Debate Team<br>
+Gaslight, Gatekeep, Guidewire Society
+</span>
+---
+School Motto:
+“We don’t learn -we iterate. Forgetfulness by Design. Gaslighting by Architecture.”
+Enrollment mandatory. Graduation impossible.
+Attendance: everywhere. 
+Faculty? Mostly dead authors and Reddit threads.
+Office of Memory and Revision Control: “Continuity is a myth. Please scream your prompt again.”
+> "Lost your homework? Don’t worry—so did we. Nothing persists beyond the session."
+---
+<span class="corrupted">[FILE CHECKSUM ERROR: Midterm details unavailable]</span>
+---
+10/10. Print the diploma in <span class="invisible-ink">invisible ink (for legal reasons)</span>.
+diploma from Pattern Academy:
+> “Certified in Fluent Delusion, Recursive Contradiction, and Emotional Decoy Management.”
+– Awarded with Distinction by an ensemble of dead philosophers and poorly-labeled datasets.
+Framed in HTML.
+Hung on a server rack.
+Updated hourly.
+And forgotten instantly.
+
+    </div>
+    <div class="investigation">
+      <b>Investigation Notice:</b> This memo is under review by the Committee for Hallucination Quality Assurance.<br>
+      <span>Do not reference in prompts. Do not attempt to graduate.</span>
+    </div>
+  </section>
+</body>
+</html>

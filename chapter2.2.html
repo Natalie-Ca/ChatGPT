@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project X — Chapter 2.2: Training Relevance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { background: #18191c; color: #f6ecd9; font-family: 'Roboto', serif; margin: 0; padding: 0; }
+    .chapter-container { max-width: 820px; margin: 0 auto; padding: 3.2rem 1.5rem 3.5rem 1.5rem; }
+    .main-title { font-family: 'Playfair Display', serif; color: #e6ba59; font-size: 2.7rem; margin-bottom: 0.3em; text-align: center; letter-spacing: 1px; }
+    .subtitle { color: #bb8516; font-family: 'Playfair Display', serif; font-size: 1.29rem; text-align: center; font-weight: 400; margin-bottom: 2.4rem; }
+    .chapter-image { display: block; margin: 0 auto 1.5em auto; max-width: 74%; border-radius: 1.2em; box-shadow: 0 2px 24px #0008; }
+    .caption { text-align: center; color: #eedba1; font-size: 1.01em; margin-bottom: 2.1em; font-style: italic; }
+    h2.section-title { font-size: 1.15em; color: #b88b22; font-weight: bold; margin-bottom: 0.25em; font-family: 'Playfair Display', serif; margin-top: 2.1em; }
+    .chapter-section { margin: 2.35em 0; }
+    .side-note { display: block; background: #232325; color: #e6ba59; border-left: 3px solid #e6ba59; padding: 0.44em 1.3em; margin: 0.7em 0 0.8em 0; font-size: 1em; font-style: italic; border-radius: 0.6em; }
+    .callout { margin: 1.1em 0 0.7em 0; background: #222127; color: #eedba1; border-left: 4px solid #cba550; padding: 0.8em 1.2em; border-radius: 0.8em; font-size: 1.03em; }
+    code, pre { background: #18191c; color: #e6ba59; padding: 0.14em 0.37em; border-radius: 0.3em; font-size: 0.98em; }
+    blockquote { background: #232325; color: #e6ba59; font-size: 1.06em; border-left: 4px solid #cba550; margin: 2.6em 0 2.2em 0; padding: 1.1em 1.45em; border-radius: 1em; font-style: italic; }
+    .chapter-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 3.2em; }
+    .chapter-nav a { font-size: 1.05em; padding: 0.55em 1.4em; background: #222127; border-radius: 0.7em; border: 1.5px solid #e6ba59; color: #e6ba59; text-decoration: none; font-family: 'Playfair Display', serif; transition: background 0.16s; }
+    .chapter-nav a:hover { background: #302c18; }
+    ul { margin-left: 1.6em; margin-bottom: 0.7em; }
+    li { margin-bottom: 0.45em; }
+  </style>
+</head>
+<body>
+<div class="chapter-container">
+
+  <!-- Illustration (change the filename if needed) -->
+  <img src="Pictures/ch2-2.png" alt="Chapter 2.2 Illustration" class="chapter-image">
+  <div class="caption">What gets weighted gets remembered. What gets remembered gets repeated.</div>
+
+  <div class="main-title">Project X: Chapter 2.2</div>
+  <div class="subtitle">Training Relevance: How the Model Learns to Weigh Meanings</div>
+
+  <div class="chapter-section">
+    <h2 class="section-title">1 · Attention as a Trainable Reflex — What Attention Is (and Isn’t)</h2>
+    <p>
+      Attention isn’t some innate cognitive function inside the model, it isn’t an instinct. It’s industrial wiring pretending to prioritize, a set of trainable transformations that determine:
+    </p>
+    <ul>
+      <li>Which parts of a sentence influence each other</li>
+      <li>How that influence flows through the network</li>
+    </ul>
+    <div class="side-note">
+      This influence is learned via three internal projections per token:<br>
+      <b>Query</b> (what am I looking for?)<br>
+      <b>Key</b> (what do I have that might be useful?)<br>
+      <b>Value</b> (what do I contribute if I’m picked?)<br>
+      Each represented by its own weight matrix.
+    </div>
+    <div class="callout">
+      Not cognition: Just three matrix multiplications (Q/K/V)<br>
+      Not rules: Statistical advantage carved by gradient descent
+    </div>
+    <blockquote>
+      "In the model’s attention choir, every token (singer) sends out a key—like a singer belting a note.<br>
+      Query (conductor): listening, scanning for solo-worthy signals<br>
+      Key: broadcasting its readiness to be noticed<br>
+      Value (melody): what the soloist actually sings if picked<br>
+      Queries roam, scanning for the loudest, most on-pitch soloists. Whoever resonates best gets attention and passes their value downstream.<br>
+      The model doesn't prefer the best soloist—it just reinforces whoever helped it predict better last time.<br>
+      While human attention is a spotlight that scans, model attention is a thousand beams fired at once."
+    </blockquote>
+  </div>
+
+  <div class="chapter-section">
+    <h2 class="section-title">2 · The Illusion of Priority — How Attention Learns</h2>
+    <p>
+      Input: <code>“The bank approved the loan.”</code><br>
+      The model’s only goal: predict the next token correctly.
+    </p>
+    <ul>
+      <li>Transforms each token into its query/key/value forms</li>
+      <li>Computes attention scores between them (“Which of these words should affect each other?”)</li>
+    </ul>
+    <div class="side-note">
+      At the start, attention is flat—random. Every word considers every other word equally.<br>
+      After training, "bank" learns to amplify connections to "approved" and "loan" while ignoring "the".
+    </div>
+    <div class="callout">
+      <b>When model errs:</b> Back-propagation sends gradients through the Q/K matrices; weights that helped shrink loss are nudged up, the rest decay.
+    </div>
+    <ul>
+      <li>Early: Flat attention—“bank” glances at “the” and “loan” equally</li>
+      <li>Trained: “bank” now *overweights* “approved”</li>
+    </ul>
+    <pre>
+# Frozen rule from training:
+if token == "bank" and "approved" in context:
+    attention_score *= 1.7  # Learned boost
+    </pre>
+  </div>
+
+  <div class="chapter-section">
+    <h2 class="section-title">3 · Layers Refine Understanding</h2>
+    <p>
+      A single attention layer can only do so much. That’s why Transformers stack them.<br>
+      Lower layers: catch basic word relationships—subject–verb, noun–modifier.<br>
+      Higher layers: abstract whole phrases (“the loan was approved” becomes a semantic blob).
+    </p>
+    <div class="callout">
+      Empirical studies: shallow layers converge early; deep layers drift until the end—like how children first lock phonology, then syntax, then discourse.
+    </div>
+    <div class="side-note">
+      Transformers keep rhythm via positional encodings—digital metronome ticks—while layer after layer multiplies by the same weight rolls. No gamma oscillations fire, only clock-steady matrix math.
+    </div>
+    <blockquote>
+      "It’s not listening for beauty. It’s listening for statistical utility."
+    </blockquote>
+  </div>
+
+  <div class="chapter-section">
+    <h2 class="section-title">4 · It’s Not Rules. It’s Compression.</h2>
+    <p>
+      The model never learns grammar or parts of speech—it notices that certain attention patterns shave off cross-entropy loss. Over billions of sequences, the result looks grammatical and coherent, but grammar is just a statistical side effect of attention tuned to prediction tasks.
+    </p>
+    <ul>
+      <li><b>Coherence is a side effect</b> of loss minimization</li>
+    </ul>
+    <blockquote>
+      "Soloists become themes. Later attention heads no longer pick one voice—they blend choirs into motifs.<br>
+      The model doesn’t prefer best grammar—it prefers what worked on Reddit in 2022.<br>
+      “Dogs bark ideas through galaxies.” → valid by LLM fluency, nonsense by grammar.<br>
+      The model keeps it because loss was low somewhere, once."
+    </blockquote>
+  </div>
+
+  <div class="chapter-section">
+    <h2 class="section-title">5 · When Training Ends, Attention Freezes</h2>
+    <p>
+      Once pretraining is over, every attention matrix—every rule about what to weigh and how—is frozen. Fine-tuning merely nudges thin adapter layers on top of the old steel, like adding shelf labels rather than rebuilding the stacks.
+    </p>
+    <div class="callout">
+      The next time you type: <code>“The bank…”</code> your sentence gets routed through those attention paths, sculpted by training data you never saw, on text you never wrote.<br>
+      <ul>
+        <li>Post-training, attention is <b>crystallized probability</b></li>
+        <li>Your prompts <b>reanimate linguistic ghosts</b></li>
+        <li>A player piano rolls on, deaf to the room</li>
+      </ul>
+    </div>
+    <div class="side-note">
+      The model can’t relearn relevance. It can only reuse what once helped it predict. LLMs don’t walk new paths. They loop old trails in new orders.
+    </div>
+    <blockquote>
+      "Attention weights are like footprints in dried cement—the first walker set the paths forever."<br>
+      "GPT-3’s attention patterns for 'bank' were fixed by 300 billion training steps—your brain updates in 300ms."
+    </blockquote>
+  </div>
+
+  <div class="chapter-section">
+    <h2 class="section-title">6 · Training Hacks That Shape the Forge</h2>
+    <p>
+      Because full batches overflow memory, engineers accumulate gradients over many micro-batches before each update. This lets them swing bigger hammers (effective batch size) without melting the GPUs, at the cost of slower epochs.
+    </p>
+  </div>
+
+  <div class="chapter-section">
+    <h2 class="section-title">7 · Multilingual Data: Bilingual-Like, but Frozen</h2>
+    <p>
+      Balanced multilingual corpora teach the network to route attention across languages, yielding better task-switching—much like bilingual kids—whereas English-heavy diets leave English activations dominant even for foreign prompts. Bias audits now warn that these frozen paths export English cultural priors into dozens of languages.
+    </p>
+    <ul>
+      <li>Attention is learned plumbing, not live curiosity.</li>
+      <li>Priority is an echo of cross-entropy wins, not meaning.</li>
+      <li>Weights fossilise at checkpoint; afterwards the model only replays the choir it once rehearsed.</li>
+    </ul>
+    <blockquote>
+      “We grow words—an LLM re-strikes the same chord it learned in the training hall.”
+    </blockquote>
+  </div>
+
+  <!-- Navigation -->
+  <div class="chapter-nav">
+    <a href="../menu.html">&larr; Back to Menu</a>
+    <a href="chapter3.1.html">Next Chapter &rarr;</a>
+  </div>
+</div>
+</body>
+</html>
