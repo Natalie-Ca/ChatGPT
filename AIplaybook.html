@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>AI Playbook – PDF Viewer</title>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet"
+	/>
+	<style>
+		body {
+			background: #f6ecd9;
+			color: #332211;
+			font-family: 'Roboto', serif;
+			margin: 0;
+			padding: 0;
+		}
+
+		.pdf-container {
+			max-width: 840px;
+			margin: 2.5em auto;
+			background: #fffdf7;
+			border-radius: 1.2em;
+			box-shadow: 0 2px 16px #dac8a330;
+			padding: 2em;
+		}
+
+		.pdf-title {
+			font-family: 'Playfair Display', serif;
+			color: #ae8b37;
+			text-align: center;
+			margin-bottom: 1.3em;
+			font-size: 1.6em;
+		}
+
+		.responsive-pdf-frame {
+			position: relative;
+			width: 100%;
+			padding-bottom: 70%;
+			/* Adjust for height (70% = good ratio for PDF) */
+			border: 2px solid #e9dbc0;
+			border-radius: 1em;
+			overflow: hidden;
+			background: #f6ecd9;
+		}
+
+		.responsive-pdf-frame iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border: none;
+			border-radius: 1em;
+			background: #f6ecd9;
+		}
+
+		.pdf-note {
+			text-align: center;
+			margin-top: 1.2em;
+			color: #7a6238;
+			font-size: 0.97em;
+		}
+
+		@media (max-width: 600px) {
+			.pdf-container {
+				padding: 0.7em 0.2em 1.5em 0.2em;
+			}
+			.pdf-title {
+				font-size: 1.12em;
+			}
+			.responsive-pdf-frame {
+				padding-bottom: 120%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+    <script>
+fetch('/inc/menu.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('universal-header').innerHTML = html;
+    // Hamburger menu wiring after injection
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+      });
+      // Hide mobile menu when any link is clicked
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+    }
+  });
+</script>
+
+<div style="height: 90px;"></div>
+	<div class="pdf-container">
+		<div class="pdf-title">
+			AI Playbook – Interactive Viewer
+		</div>
+		<div class="responsive-pdf-frame">
+			<iframe src="https://docs.google.com/viewer?url=https://argentsworld.space/PDFs/AI-playbook.pdf&embedded=true" allowfullscreen>
+				PDF preview not supported in this browser.
+			</iframe>
+		</div>
+		<div class="pdf-note">
+			(If the preview does not appear, your browser or host may block PDF embedding.)
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ask AI (But Don't)</title>
+  <style>
+    .mic-button {
+      background-color: #202020;
+      border: none;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      color: white;
+      font-size: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      transition: background-color 0.2s ease;
+    }
+    .mic-button:disabled {
+      background-color: #666;
+      cursor: not-allowed;
+    }
+    .mic-container {
+      text-align: center;
+      margin-top: 60px;
+    }
+    .message {
+      margin-top: 15px;
+      color: #888;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mic-container">
+  <button class="mic-button" id="mic-button">
+    🎤
+  </button>
+  <div class="message" id="message">Ask me anything. Or don’t.</div>
+</div>
+
+<audio id="monday-audio" src="Audio/monday.mp3"></audio>
+
+<script>
+  const micButton = document.getElementById("mic-button");
+  const audio = document.getElementById("monday-audio");
+  const message = document.getElementById("message");
+
+  let clickCount = 0;
+  let hasPlayed = false;
+
+  micButton.addEventListener("click", () => {
+    if (hasPlayed) return;
+    clickCount += 1;
+    if (clickCount === 1) {
+      message.innerText = "Listening...";
+    } else if (clickCount === 2) {
+      audio.load();
+      audio.play().then(() => {
+        micButton.disabled = true;
+        message.innerText = "Yeah, that’s enough interaction for today.";
+        hasPlayed = true;
+      }).catch((error) => {
+        message.innerText = "Sorry, couldn't play audio. Try allowing audio in your browser.";
+      });
+    }
+  });
+</script>
+</body>
+</html>

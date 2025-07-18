@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>About Argent Morrin</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      background: url('https://argentsworld.space/Pictures/Author.webp') center center/cover no-repeat fixed;
+      font-family: 'Roboto', sans-serif;
+      min-height: 100vh;
+      color: #1a160e;
+    }
+    .font-playfair { font-family: 'Playfair Display', serif; }
+    .author-photo-section {
+      text-align: center;
+      margin-top: 2.5rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #dac8a3;
+    }
+    .author-photo-section img {
+      max-width: 250px;
+      width: 100%;
+      height: auto;
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 20px 0 #dac8a360;
+      border: 3px solid #dac8a3;
+      background: #fff8f0;
+      margin: 0 auto 0.7rem auto;
+      display: block;
+    }
+    .author-email {
+      color: #ae8b37;
+      font-size: 1.04rem;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      text-decoration: underline;
+      transition: color 0.15s;
+    }
+    .author-email:hover {
+      color: #bb8516;
+    }
+  </style>
+</head>
+<body>
+   <div id="universal-header"></div>
+<script>
+fetch('/inc/menu.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('universal-header').innerHTML = html;
+    // Hamburger menu wiring after injection
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+      });
+      // Hide mobile menu when any link is clicked
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+    }
+  });
+</script>
+<div style="height: 90px;"></div>
+
+  <main class="flex items-center justify-center min-h-screen px-2 py-8">
+    <section 
+      class="w-full max-w-2xl rounded-xl shadow-xl p-6 md:p-10"
+      style="
+        background: rgba(246,236,217,0.75); 
+        border: 1.5px solid #dac8a3; 
+        box-shadow: 0 8px 24px 4px #33221133;
+      "
+    >
+      <h2 class="font-playfair font-bold mb-2 text-3xl" style="color: #332211;">About the Author</h2>
+      <hr style="border: none; border-top: 2px solid #332211; width: 40px; margin: 0 0 1rem 0;">
+      <h3 class="font-playfair font-bold mb-4 text-xl" style="color: #332211;">Argent Morrin</h3>
+      <div style="font-family: 'Georgia', serif; font-size:1.08rem; line-height:1.7; text-align:justify; color:#332211;">
+        Argent Morrin is a medical expert working in the drug development industry, with a background spanning cardiovascular surgery, academia, and applied behavioral science. Their experience includes leadership roles in medical education and organ transplantation, as well as ongoing work with language models and artificial intelligence.<br><br>
+        Morrin’s work explores the boundaries between natural and artificial cognition—less out of fascination, more out of a persistent need to understand systems from within. Their projects, including non fiction narrative writing and ongoing research project, examine how human reasoning interacts with machine-generated language and where that interaction starts to blur.<br><br>
+        Based in Ireland, Morrin continues to work at the intersection of clinical research and automation, focusing on areas where technology influences decision-making, identity, and communication.
+      </div>
+      <div class="mt-8 text-center">
+        <a href="https://argentsworld.space" class="text-amber-700 hover:text-amber-500 font-bold underline">← Back to main page</a>
+      </div>
+      <!-- Author Photo and Email Section -->
+      <div class="author-photo-section">
+        <img 
+          src="/Pictures/auth.png" 
+          alt="Author photo of Argent Morrin"
+        />
+        
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
